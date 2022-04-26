@@ -1,21 +1,37 @@
 # Create your views here.
-from django.http import HttpResponse
-from django.views.generic.base import View
+
+
+from rest_framework import status, filters
+# from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import action
+from .serializers import ProjectsModelSerializer, ProjectSerializer
 from projects.models import Projects
-from django.db import models
+from rest_framework import viewsets
+import logging
+
+log = logging.getLogger('wl')
 
 
-class ProjectView(View):
+class ProjectViewSet(viewsets.ModelViewSet):
+    """
+        list:
+        获取项目列表数据
 
-    def get(self, request):
+        retrieve:
+        获取项目详情数据
 
-        # 创建（C）
-        # Projects.objects.create(name='道路项目',leader='金凤')
-        # Projects.objects.create(name='亚运会项目1',leader='会见1')
-        # Projects.objects.create(name='亚运会项目2',leader='会见2')
-        # Projects.objects.create(name='亚运会项目3',leader='会见3')
+        update:
+        更新项目信息
 
-        # 读取（R）
-        obj=Projects.objects.filter(id=1)
-        print(obj.name)
-        return HttpResponse('数据写入成功')
+        names:
+        获取项目名称
+
+        """
+    queryset = Projects.objects.all()
+    serializer_class = ProjectsModelSerializer
+
+    @action(methods=['GET'], detail=False)
+    def names(self, request, *args, **kwargs):
+        log.info('ceshi')
+        return super().list(request, *args, **kwargs)
+

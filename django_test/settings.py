@@ -9,12 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import datetime
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-35pf)i%qo9md&)g5)26%on_*4l#@)2&g@bwsknh_w$w5_+7!=c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
     'projects',
     'interfaces',
 ]
@@ -45,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -71,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_test.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -86,7 +86,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -106,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -118,7 +116,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -128,3 +125,88 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 1、在全局DEFAULT_FILTER_BACKENDS指定使用的过滤引擎类（SearchFilter为搜索引擎类）
+REST_FRAMEWORK = {'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter',
+                                              'rest_framework.filters.OrderingFilter'],
+                  'DEFAULT_PAGINATION_CLASS': 'utils.pagination.PageNumberPagination',
+                  'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+                  'DEFAULT_AUTHENTICATION_CLASSES': [
+                      # 指定使用JWT TOKEN认证类
+                      'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+                      # b.Session会话认证
+                      'rest_framework.authentication.SessionAuthentication',
+                      'rest_framework.authentication.BasicAuthentication'
+                  ],
+                  'DEFAULT_PERMISSION_CLASSES': [
+                      # AllowAny不管是否有认证成功，都能获取所有权限
+                      # IsAdminUser管理员（管理员需要登录）具备所有权限
+                      # IsAuthenticated只要登录，就具备所有权限
+                      # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
+                      'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+                  ],
+                  }
+
+LOGGING = {
+    # 指定日志版本
+    'version': 1,
+    # 指定是否禁用其他日志，False为不禁用
+    'disable_existing_loggers': False,
+    # 定义日志输出格式
+    'formatters': {
+        # 简单格式
+        'simple': {
+            'format': '%(asctime)s - [%(levelname)s] - [msg]%(message)s'
+        },
+        # 复杂格式
+        'verbose': {
+            'format': '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    # 指定日志输出渠道（日志输出的地方）
+    'handlers': {
+        # 指定在console控制台（终端）的日志配置行李箱
+        'console': {
+            # 指定日志记录等级
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        # 指定在日志文件的配置信息
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, "logs/mytest.log"),  # 日志文件的位置
+            'maxBytes': 100 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8'
+        },
+    },
+    # 定义日志器
+    'loggers': {
+        # 指定日志器的名称
+        'wl': {  # 定义了一个名为mytest的日志器
+            'handlers': ['console', 'file'],
+            'propagate': True,
+            'level': 'DEBUG',  # 日志器接收的最低日志级别
+        },
+    }
+}
+JWT_AUTH = {
+    # 修改JWT TOKEN认证请求头中Authorization value值的前缀，默认为JWT
+    # 'JWT_AUTH_HEADER_PREFIX': 'bearer',
+
+    # 指定TOKEN过期时间，默认为5分钟，可以使用JWT_EXPIRATION_DELTA指定
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+
+    # 修改处理payload的函数
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'utils.handle_jwt_response.jwt_response_payload_handler',
+}
