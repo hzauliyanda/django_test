@@ -18,6 +18,7 @@ from django.urls import path, include, re_path
 from rest_framework.documentation import include_docs_urls
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework_jwt.views import obtain_jwt_token
 
 schema_view = get_schema_view(
     openapi.Info(title="Lemon API接口文档平台",  # 必传
@@ -39,5 +40,7 @@ urlpatterns = [
 
     # 在全局路由表中添加rest_framework.urls子路由
     # a.rest_framework.urls提供了登录和登出功能（返回的是一个HTML页面，并不是接口）
-    path('api/', include('rest_framework.urls'))
+    # path('api/', include('rest_framework.urls')),
+
+    path('user/', include('users.urls')),
 ]

@@ -36,15 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
+    'rest_framework_jwt',
     'drf_yasg',
     'projects',
     'interfaces',
+    'users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 增加这个，放最前面
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -110,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -127,25 +131,33 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 1、在全局DEFAULT_FILTER_BACKENDS指定使用的过滤引擎类（SearchFilter为搜索引擎类）
-REST_FRAMEWORK = {'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter',
-                                              'rest_framework.filters.OrderingFilter'],
-                  'DEFAULT_PAGINATION_CLASS': 'utils.pagination.PageNumberPagination',
-                  'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-                  'DEFAULT_AUTHENTICATION_CLASSES': [
-                      # 指定使用JWT TOKEN认证类
-                      'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-                      # b.Session会话认证
-                      'rest_framework.authentication.SessionAuthentication',
-                      'rest_framework.authentication.BasicAuthentication'
-                  ],
-                  'DEFAULT_PERMISSION_CLASSES': [
-                      # AllowAny不管是否有认证成功，都能获取所有权限
-                      # IsAdminUser管理员（管理员需要登录）具备所有权限
-                      # IsAuthenticated只要登录，就具备所有权限
-                      # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
-                      'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-                  ],
-                  }
+REST_FRAMEWORK = {
+    # # 异常处理函数配置
+    # 'EXCEPTION_HANDLER': 'luffyapi.utils.exceptions.luffy_exception_handler',
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter',
+                                'rest_framework.filters.OrderingFilter'],
+    'DEFAULT_PAGINATION_CLASS': 'utils.pagination.PageNumberPagination',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+
+    # 指定使用的认证类
+    # a.在全局指定默认的认证类（指定认证方式）
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+
+        # 指定使用JWT TOKEN认证类
+        # 将token值设置请求头参数，key为Authorization，value为JWT token值
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # b.Session会话认证
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # AllowAny不管是否有认证成功，都能获取所有权限
+        # IsAdminUser管理员（管理员需要登录）具备所有权限
+        # IsAuthenticated只要登录，就具备所有权限
+        # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
+        # 'rest_framework.permissions.IsAuthenticated'
+    ],
+}
 
 LOGGING = {
     # 指定日志版本
@@ -210,3 +222,17 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
         'utils.handle_jwt_response.jwt_response_payload_handler',
 }
+# CORS_ORIGIN_ALLOW_ALL为True, 指定所有域名(ip)都可以访问后端接口, 默认为False
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ORIGIN_WHITELIST指定能够访问后端接口的ip或域名列表
+# CORS_ORIGIN_WHITELIST = [
+#     "http://127.0.0.1:8080",
+#     "http://localhost:8080",
+#     "http://192.168.1.63:8080",
+#     "http://127.0.0.1:9000",
+#     "http://localhost:9000",
+# ]
+
+# 允许跨域时携带Cookie, 默认为False
+CORS_ALLOW_CREDENTIALS = True
