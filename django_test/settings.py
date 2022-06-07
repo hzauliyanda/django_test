@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import datetime
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# apps绝对路径
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -40,9 +43,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_jwt',
     'drf_yasg',
+
     'projects',
     'interfaces',
     'users',
+    'configures',
+    'debugtalks',
+    'envs',
+    'reports',
+    'testcases',
+    'testsuites',
 ]
 
 MIDDLEWARE = [
@@ -147,16 +157,16 @@ REST_FRAMEWORK = {
         # 将token值设置请求头参数，key为Authorization，value为JWT token值
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # b.Session会话认证
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication'
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        # AllowAny不管是否有认证成功，都能获取所有权限
-        # IsAdminUser管理员（管理员需要登录）具备所有权限
-        # IsAuthenticated只要登录，就具备所有权限
-        # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
-        # 'rest_framework.permissions.IsAuthenticated'
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    # AllowAny不管是否有认证成功，都能获取所有权限
+    # IsAdminUser管理员（管理员需要登录）具备所有权限
+    # IsAuthenticated只要登录，就具备所有权限
+    # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
+    # 'rest_framework.permissions.IsAuthenticated'
+    # ],
 }
 
 LOGGING = {

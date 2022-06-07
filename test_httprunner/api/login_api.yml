@@ -1,0 +1,16 @@
+
+name: "登录login接口"
+variables:
+    username: "${ENV(USERNAME)}"
+    password: "${ENV(PASSWORD)}"
+base_url: "${ENV(BASE_URL)}"
+request:
+    url: /user/login/
+    method: POST
+    headers:
+        Content-Type: "application/json"
+    json:
+        username: "$username"
+        password: "$password"
+validate:
+    - eq: ["status_code", 200]

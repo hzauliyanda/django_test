@@ -1,8 +1,8 @@
 
-name: demo api
+name: "登录login接口"
 variables:
-    var1: value1
-    var2: value2
+    username: value1
+    password: value2
 request:
     url: /api/path/$var1
     method: POST
