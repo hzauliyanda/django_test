@@ -1,8 +1,16 @@
 # Create your views here.
+from datetime import datetime
 
-
+from django.db.models import Sum
+from django.views import View
 from rest_framework import status, filters, permissions
 from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from debugtalks.models import DebugTalks
+from envs.models import Envs
+from reports.models import Reports
+from utils.mixins import RunMixin
 from . import serializers
 from .models import Projects
 from rest_framework import viewsets
@@ -15,7 +23,7 @@ from configures.models import Configures
 log = logging.getLogger('wl')
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(RunMixin, viewsets.ModelViewSet):
     """
     create:
     创建项目数据
@@ -58,12 +66,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
             # interface__project__id为Testcases的关联字段interface的__关联字段project的id
             item['testcases'] = Testcases.objects.filter(interface__project__id=item.get('id')).count()
             item['configures'] = Configures.objects.filter(interface__project__id=item.get('id')).count()
+        log.info("action为list的response：" + str(response.data))
         return response
 
     @action(methods=['GET'], detail=False)
     def names(self, request, *args, **kwargs):
         """
-        只返回id和names字段
+        只返回id和name字段
         :param request:
         :param args:
         :param kwargs:
@@ -84,6 +93,22 @@ class ProjectViewSet(viewsets.ModelViewSet):
         result.data = result.data.get('interfaces')
         return result
 
+    # @action(methods=['POST'], detail=True)
+    # def run(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     testcases_qs = Testcases.objects.filter(interface__project=instance)
+    #     if len(testcases_qs) == 0:
+    #         return Response({'msg': '此项目下没有用例，无法执行！'}, status=400)
+    #     return self.execute(request, testcases_qs)
+    def get_testcase_qs(self):
+        """
+        获取测试用例集
+        :return: 测试用例集,类型为QuerySet
+        """
+        instance = self.get_object()
+        testcases_qs = Testcases.objects.filter(interface__project=instance)
+        return testcases_qs
+
     def get_serializer_class(self):
         """
         重写get_serializer_class类，根据不同action访问不同的模型序列化器类
@@ -93,6 +118,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
             return serializers.ProjectsNamesModelSerailizer
         elif self.action == 'interfaces':
             return serializers.ProjectInterfacesModelSerailizer
+        elif self.action == 'run':
+            return serializers.ProjectRunModelSerailizer
         else:
             return super().get_serializer_class()
 
@@ -106,9 +133,3 @@ class ProjectViewSet(viewsets.ModelViewSet):
             return
         else:
             return super().paginate_queryset(queryset)
-
-    # def get_queryset(self):
-    #     if self.action == 'names':
-    #         return self.queryset.filter(name__icontains='平台')
-    #     else:
-    #         return super().get_queryset()

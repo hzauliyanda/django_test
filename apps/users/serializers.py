@@ -83,3 +83,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         token = jwt_encode_handler(payload)
         user.token = token
         return user
+
+
+# class UserPartSerializer(serializers.ModelSerializer):
+#     """
+#     定义模型序列化器类,只返回部分字段
+#     """
+#
+#     class Meta:
+#         """
+#         model：指定序列化模型类
+#         fields：指定序列化器字段
+#         extra_kwargs：微调序列化字段的规则
+#         """
+#         model = User
+#         fields = ('username', 'is_superuser', 'email', 'date_joined', 'last_login')

@@ -4,6 +4,8 @@ import re
 from rest_framework import serializers
 from interfaces.models import Interfaces
 from projects.models import Projects
+from utils.base_serializers import RunSerializer
+from utils.validators import ManualValidateIsExist
 from .models import Testsuits
 
 
@@ -68,3 +70,15 @@ class TestsuiteModelSerializer(serializers.ModelSerializer):
         tmp = super().to_internal_value(data)
         tmp['project_id'] = tmp.get('project_id').id
         return tmp
+
+
+class TestsuiteRunSerializer(RunSerializer, serializers.ModelSerializer):
+    """
+    继承父类BaseSerializer
+    """
+
+    class Meta(RunSerializer.Meta):
+        """
+        继承父类BaseSerializer的子类，指定模型对象
+        """
+        model = Testsuits

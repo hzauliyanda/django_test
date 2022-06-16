@@ -3,6 +3,9 @@
 序列化器，子应用中创建serializers.py文件
 """
 from rest_framework import serializers
+
+from utils.base_serializers import RunSerializer
+from utils.validators import ManualValidateIsExist
 from .models import Projects
 from interfaces.models import Interfaces
 
@@ -13,6 +16,7 @@ class ProjectsModelSerializer(serializers.ModelSerializer):
     """
     定义项目模型序列化器类
     """
+
     class Meta:
         """
         model：指定序列化模型类
@@ -43,6 +47,7 @@ class ProjectsNamesModelSerailizer(serializers.ModelSerializer):
     """
     序列化器类，生成序列化器字段时只生成项目的id和name
     """
+
     class Meta:
         model = Projects
         fields = ('id', 'name')
@@ -52,6 +57,7 @@ class InterfacesNamesModelSerailizer(serializers.ModelSerializer):
     """
     序列化器类，生成序列化器字段时只生成接口的id和name
     """
+
     class Meta:
         model = Interfaces
         fields = ('id', 'name')
@@ -71,3 +77,15 @@ class ProjectInterfacesModelSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = ('interfaces',)
+
+
+class ProjectRunModelSerailizer(RunSerializer, serializers.ModelSerializer):
+    """
+    继承父类BaseSerializer
+    """
+
+    class Meta(RunSerializer.Meta):
+        """
+        继承父类BaseSerializer的子类，指定模型对象
+        """
+        model = Projects

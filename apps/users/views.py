@@ -8,7 +8,9 @@ from rest_framework.views import APIView
 from users.serializers import RegisterSerializer
 
 
-class UserView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class UserView(mixins.CreateModelMixin,
+               mixins.ListModelMixin,
+               viewsets.GenericViewSet):
     """
     create:
     创建接口数据
@@ -21,6 +23,7 @@ class UsernameIsExistedView(APIView):
     """
     重写父类方法，统计数据库中用户名的数量
     """
+
     def get(self, request, username):
         count = User.objects.filter(username=username).count()
         return Response({'username': username, 'count': count})
@@ -30,6 +33,7 @@ class EmailIsExistedView(APIView):
     """
     重写父类方法，统计数据库中email的数量
     """
+
     def get(self, request, email):
         count = User.objects.filter(email=email).count()
         return Response({'email': email, 'count': count})

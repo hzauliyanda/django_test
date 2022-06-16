@@ -1,0 +1,833 @@
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目二之获取所有项目列表_20220616114405 - TestReport</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      color: #333;
+      margin: 0 auto;
+      width: 960px;
+    }
+    #summary {
+      width: 960px;
+      margin-bottom: 20px;
+    }
+    #summary th {
+      background-color: skyblue;
+      padding: 5px 12px;
+    }
+    #summary td {
+      background-color: lightblue;
+      text-align: center;
+      padding: 4px 8px;
+    }
+    .details {
+      width: 960px;
+      margin-bottom: 20px;
+    }
+    .details th {
+      background-color: skyblue;
+      padding: 5px 12px;
+    }
+    .details tr .passed {
+      background-color: lightgreen;
+    }
+    .details tr .failed {
+      background-color: red;
+    }
+    .details tr .unchecked {
+      background-color: gray;
+    }
+    .details td {
+      background-color: lightblue;
+      padding: 5px 12px;
+    }
+    .details .detail {
+      background-color: lightgrey;
+      font-size: smaller;
+      padding: 5px 10px;
+      text-align: center;
+    }
+    .details .success {
+      background-color: greenyellow;
+    }
+    .details .error {
+      background-color: red;
+    }
+    .details .failure {
+      background-color: salmon;
+    }
+    .details .skipped {
+      background-color: gray;
+    }
+
+    .button {
+      font-size: 1em;
+      padding: 6px;
+      width: 4em;
+      text-align: center;
+      background-color: #06d85f;
+      border-radius: 20px/50px;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+    }
+    a.button{
+      color: gray;
+      text-decoration: none;
+    }
+    .button:hover {
+      background: #2cffbd;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      transition: opacity 500ms;
+      visibility: hidden;
+      opacity: 0;
+    }
+    .overlay:target {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup {
+      margin: 70px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      width: 50%;
+      position: relative;
+      transition: all 3s ease-in-out;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      color: #333;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+    .popup .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+    .popup .close:hover {
+      color: #06d85f;
+    }
+    .popup .content {
+      max-height: 80%;
+      overflow: auto;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 700px) {
+      .box {
+        width: 70%;
+      }
+      .popup {
+        width: 70%;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Test Report: 项目二之获取所有项目列表_20220616114405</h1>
+
+  <h2>Summary</h2>
+  <table id="summary">
+
+    <tr>
+      <th>START AT</th>
+      <td colspan="4">2022-06-16 11:44:04</td>
+    </tr>
+    <tr>
+      <th>DURATION</th>
+      <td colspan="4">0.210 seconds</td>
+    </tr>
+    <tr>
+      <th>PLATFORM</th>
+      <td>HttpRunner 1.5.8 </td>
+      <td>CPython 3.9.11 </td>
+      <td colspan="2">macOS-12.0.1-x86_64-i386-64bit</td>
+    </tr>
+    <tr>
+      <th>TOTAL</th>
+      <th>SUCCESS</th>
+      <th>FAILED</th>
+      <th>ERROR</th>
+      <th>SKIPPED</th>
+      <!-- <th>ExpectedFailure</th>
+      <th>UnexpectedSuccess</th> -->
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <!-- <td>0</td>
+      <td>0</td> -->
+    </tr>
+  </table>
+
+  <h2>Details</h2>
+
+  
+  
+  <h3>项目二之获取项目用例</h3>
+  <table id="suite_1" class="details">
+    <tr>
+      <th>base_url</th>
+      <td colspan="2">http://localhost:8000</td>
+      <th colspan="2" class="detail">
+        <a class="button" href="#suite_output_1">parameters & output</a>
+        <div id="suite_output_1" class="overlay">
+            <div class="popup">
+                <h2>Parameters and Output</h2>
+                <a class="close" href="#suite_1">&times;</a>
+                <div class="content">
+                  <div style="overflow: auto">
+                      <table>
+                        <tr>
+                          <th>variables</th>
+                          <th>output</th>
+                        </tr>
+                        
+                      </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>TOTAL: 2</td>
+      <td>SUCCESS: 2</td>
+      <td>FAILED: 0</td>
+      <td>ERROR: 0</td>
+      <td>SKIPPED: 0</td>
+    </tr>
+    <tr>
+      <th>Status</th>
+      <th colspan="2">Name</th>
+      <th>Response Time</th>
+      <th>Detail</th>
+    </tr>
+
+    
+    
+    <tr id="record_1_1">
+      <th class="success" style="width:5em;">success</td>
+      <td colspan="2">项目2之登录接口测试</td>
+      <td style="text-align:center;width:6em;">146.16 ms</td>
+      <td class="detail">
+
+        <a class="button" href="#popup_log_1_1">log</a>
+        <div id="popup_log_1_1" class="overlay">
+          <div class="popup">
+            <h2>Request and Response data</h2>
+            <a class="close" href="#record_1_1">&times;</a>
+
+            <div class="content">
+              <h3>Request:</h3>
+              <div style="overflow: auto">
+                <table>
+                  
+                    <tr>
+                      <th>url</th>
+                      <td>
+                        
+                          http://localhost:8000/user/login/
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>method</th>
+                      <td>
+                        
+                          POST
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>headers</th>
+                      <td>
+                        
+                          
+                          <div>
+                            <strong>User-Agent</strong>: python-requests/2.27.1
+                          </div>
+                          
+                          <div>
+                            <strong>Accept-Encoding</strong>: gzip, deflate
+                          </div>
+                          
+                          <div>
+                            <strong>Accept</strong>: */*
+                          </div>
+                          
+                          <div>
+                            <strong>Connection</strong>: keep-alive
+                          </div>
+                          
+                          <div>
+                            <strong>Content-Length</strong>: 40
+                          </div>
+                          
+                          <div>
+                            <strong>Content-Type</strong>: application/json
+                          </div>
+                          
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>start_timestamp</th>
+                      <td>
+                        
+                          1655351044.890718
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>json</th>
+                      <td>
+                        
+                          {'password': '1234', 'username': 'test'}
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>body</th>
+                      <td>
+                        
+                          {"password": "1234", "username": "test"}
+                        
+                      </td>
+                    </tr>
+                  
+                </table>
+              </div>
+
+              <h3>Response:</h3>
+              <div style="overflow: auto">
+                <table>
+                    
+                      <tr>
+                        <th>status_code</th>
+                        <td>
+                          
+                            200
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>headers</th>
+                        <td>
+                          
+                            
+                            <div>
+                              <strong>User-Agent</strong>: python-requests/2.27.1
+                            </div>
+                            
+                            <div>
+                              <strong>Accept-Encoding</strong>: gzip, deflate
+                            </div>
+                            
+                            <div>
+                              <strong>Accept</strong>: */*
+                            </div>
+                            
+                            <div>
+                              <strong>Connection</strong>: keep-alive
+                            </div>
+                            
+                            <div>
+                              <strong>Content-Length</strong>: 40
+                            </div>
+                            
+                            <div>
+                              <strong>Content-Type</strong>: application/json
+                            </div>
+                            
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content_size</th>
+                        <td>
+                          
+                            217
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>response_time_ms</th>
+                        <td>
+                          
+                            146.16
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>elapsed_ms</th>
+                        <td>
+                          
+                            141.225
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>encoding</th>
+                        <td>
+                          
+                            utf-8
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content</th>
+                        <td>
+                          
+                            {"user_id":1,"username":"test","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NTU0Mzc0NDUsImVtYWlsIjoiMTIzQDEyMy5jb20ifQ.gooV6K-70rwCfr8Hz_QAHbc_shLZx097reHCqH-cYbc"}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content_type</th>
+                        <td>
+                          
+                            
+                              <pre></pre>
+                            
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>ok</th>
+                        <td>
+                          
+                            True
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>url</th>
+                        <td>
+                          
+                            http://localhost:8000/user/login/
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>reason</th>
+                        <td>
+                          
+                            OK
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>cookies</th>
+                        <td>
+                          
+                            {}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>text</th>
+                        <td>
+                          
+                            {"user_id":1,"username":"test","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NTU0Mzc0NDUsImVtYWlsIjoiMTIzQDEyMy5jb20ifQ.gooV6K-70rwCfr8Hz_QAHbc_shLZx097reHCqH-cYbc"}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>json</th>
+                        <td>
+                          
+                            {'user_id': 1, 'username': 'test', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NTU0Mzc0NDUsImVtYWlsIjoiMTIzQDEyMy5jb20ifQ.gooV6K-70rwCfr8Hz_QAHbc_shLZx097reHCqH-cYbc'}
+                          
+                        </td>
+                      </tr>
+                    
+                  </table>
+              </div>
+
+              <h3>Validators:</h3>
+              <div style="overflow: auto">
+                  <table>
+                    <tr>
+                      <th>check</th>
+                      <th>comparator</th>
+                      <th>expect value</th>
+                      <th>actual value</th>
+                    </tr>
+                    
+                    <tr>
+                      
+                      <td class="passed">
+                      
+                        status_code
+                      </td>
+                      <td>equals</td>
+                      <td>200</td>
+                      <td>200</td>
+                    </tr>
+                    
+                  </table>
+              </div>
+
+              <h3>Statistics:</h3>
+              <div style="overflow: auto">
+                <table>
+                  <tr>
+                      <th>content_size(bytes)</th>
+                      <td>217</td>
+                    </tr>
+                  <tr>
+                    <th>response_time(ms)</th>
+                    <td>146.16</td>
+                  </tr>
+                  <tr>
+                    <th>elapsed(ms)</th>
+                    <td>141.225</td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        
+
+      </td>
+    </tr>
+  
+    
+    <tr id="record_1_2">
+      <th class="success" style="width:5em;">success</td>
+      <td colspan="2">项目二之获取项目用例</td>
+      <td style="text-align:center;width:6em;">59.37 ms</td>
+      <td class="detail">
+
+        <a class="button" href="#popup_log_1_2">log</a>
+        <div id="popup_log_1_2" class="overlay">
+          <div class="popup">
+            <h2>Request and Response data</h2>
+            <a class="close" href="#record_1_2">&times;</a>
+
+            <div class="content">
+              <h3>Request:</h3>
+              <div style="overflow: auto">
+                <table>
+                  
+                    <tr>
+                      <th>url</th>
+                      <td>
+                        
+                          http://localhost:8000/projects/
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>method</th>
+                      <td>
+                        
+                          GET
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>headers</th>
+                      <td>
+                        
+                          
+                          <div>
+                            <strong>User-Agent</strong>: python-requests/2.27.1
+                          </div>
+                          
+                          <div>
+                            <strong>Accept-Encoding</strong>: gzip, deflate
+                          </div>
+                          
+                          <div>
+                            <strong>Accept</strong>: */*
+                          </div>
+                          
+                          <div>
+                            <strong>Connection</strong>: keep-alive
+                          </div>
+                          
+                          <div>
+                            <strong>authorization</strong>: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NTU0Mzc0NDUsImVtYWlsIjoiMTIzQDEyMy5jb20ifQ.gooV6K-70rwCfr8Hz_QAHbc_shLZx097reHCqH-cYbc
+                          </div>
+                          
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>start_timestamp</th>
+                      <td>
+                        
+                          1655351045.039071
+                        
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <th>body</th>
+                      <td>
+                        
+                          None
+                        
+                      </td>
+                    </tr>
+                  
+                </table>
+              </div>
+
+              <h3>Response:</h3>
+              <div style="overflow: auto">
+                <table>
+                    
+                      <tr>
+                        <th>status_code</th>
+                        <td>
+                          
+                            200
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>headers</th>
+                        <td>
+                          
+                            
+                            <div>
+                              <strong>User-Agent</strong>: python-requests/2.27.1
+                            </div>
+                            
+                            <div>
+                              <strong>Accept-Encoding</strong>: gzip, deflate
+                            </div>
+                            
+                            <div>
+                              <strong>Accept</strong>: */*
+                            </div>
+                            
+                            <div>
+                              <strong>Connection</strong>: keep-alive
+                            </div>
+                            
+                            <div>
+                              <strong>authorization</strong>: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QiLCJleHAiOjE2NTU0Mzc0NDUsImVtYWlsIjoiMTIzQDEyMy5jb20ifQ.gooV6K-70rwCfr8Hz_QAHbc_shLZx097reHCqH-cYbc
+                            </div>
+                            
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content_size</th>
+                        <td>
+                          
+                            1400
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>response_time_ms</th>
+                        <td>
+                          
+                            59.37
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>elapsed_ms</th>
+                        <td>
+                          
+                            55.867
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>encoding</th>
+                        <td>
+                          
+                            utf-8
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content</th>
+                        <td>
+                          
+                            {"count":6,"next":"http://localhost:8000/projects/?page=2","previous":null,"results":[{"id":1,"create_time":"2019年11月06日 14时21分19秒","name":"自动化测试平台项目","leader":"ydli12","tester":"xiaoqi","programmer":"xiaoqi","publish_app":"自动化测试平台应用","desc":"测试","interfaces":3,"testsuits":1,"testcases":4,"configures":2},{"id":3,"create_time":"2022年05月31日 14时44分05秒","name":"项目测试1122","leader":"小七","tester":"克里qweqw112put2","programmer":"小七","publish_app":"自动化测试平台应用2","desc":"这是测123213put2","interfaces":1,"testsuits":1,"testcases":0,"configures":0},{"id":4,"create_time":"2022年06月01日 10时19分49秒","name":"测试vue提交","leader":"小李","tester":"小丽","programmer":"小李","publish_app":"testapp111","desc":"哈哈哈哈哈哈哈哈","interfaces":0,"testsuits":0,"testcases":0,"configures":0},{"id":5,"create_time":"2022年06月02日 18时02分28秒","name":"项目123","leader":"小露","tester":"小沈","programmer":"小李","publish_app":"test2","desc":"213","interfaces":0,"testsuits":0,"testcases":0,"configures":0},{"id":6,"create_time":"2022年06月07日 15时25分35秒","name":"test123","leader":"test123","tester":"test123","programmer":"test123","publish_app":"test123","desc":"test123","interfaces":1,"testsuits":1,"testcases":0,"configures":0}],"current_num":1,"max_num":2}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>content_type</th>
+                        <td>
+                          
+                            
+                              <pre></pre>
+                            
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>ok</th>
+                        <td>
+                          
+                            True
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>url</th>
+                        <td>
+                          
+                            http://localhost:8000/projects/
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>reason</th>
+                        <td>
+                          
+                            OK
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>cookies</th>
+                        <td>
+                          
+                            {}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>text</th>
+                        <td>
+                          
+                            {"count":6,"next":"http://localhost:8000/projects/?page=2","previous":null,"results":[{"id":1,"create_time":"2019年11月06日 14时21分19秒","name":"自动化测试平台项目","leader":"ydli12","tester":"xiaoqi","programmer":"xiaoqi","publish_app":"自动化测试平台应用","desc":"测试","interfaces":3,"testsuits":1,"testcases":4,"configures":2},{"id":3,"create_time":"2022年05月31日 14时44分05秒","name":"项目测试1122","leader":"小七","tester":"克里qweqw112put2","programmer":"小七","publish_app":"自动化测试平台应用2","desc":"这是测123213put2","interfaces":1,"testsuits":1,"testcases":0,"configures":0},{"id":4,"create_time":"2022年06月01日 10时19分49秒","name":"测试vue提交","leader":"小李","tester":"小丽","programmer":"小李","publish_app":"testapp111","desc":"哈哈哈哈哈哈哈哈","interfaces":0,"testsuits":0,"testcases":0,"configures":0},{"id":5,"create_time":"2022年06月02日 18时02分28秒","name":"项目123","leader":"小露","tester":"小沈","programmer":"小李","publish_app":"test2","desc":"213","interfaces":0,"testsuits":0,"testcases":0,"configures":0},{"id":6,"create_time":"2022年06月07日 15时25分35秒","name":"test123","leader":"test123","tester":"test123","programmer":"test123","publish_app":"test123","desc":"test123","interfaces":1,"testsuits":1,"testcases":0,"configures":0}],"current_num":1,"max_num":2}
+                          
+                        </td>
+                      </tr>
+                    
+                      <tr>
+                        <th>json</th>
+                        <td>
+                          
+                            {'count': 6, 'next': 'http://localhost:8000/projects/?page=2', 'previous': None, 'results': [{'id': 1, 'create_time': '2019年11月06日 14时21分19秒', 'name': '自动化测试平台项目', 'leader': 'ydli12', 'tester': 'xiaoqi', 'programmer': 'xiaoqi', 'publish_app': '自动化测试平台应用', 'desc': '测试', 'interfaces': 3, 'testsuits': 1, 'testcases': 4, 'configures': 2}, {'id': 3, 'create_time': '2022年05月31日 14时44分05秒', 'name': '项目测试1122', 'leader': '小七', 'tester': '克里qweqw112put2', 'programmer': '小七', 'publish_app': '自动化测试平台应用2', 'desc': '这是测123213put2', 'interfaces': 1, 'testsuits': 1, 'testcases': 0, 'configures': 0}, {'id': 4, 'create_time': '2022年06月01日 10时19分49秒', 'name': '测试vue提交', 'leader': '小李', 'tester': '小丽', 'programmer': '小李', 'publish_app': 'testapp111', 'desc': '哈哈哈哈哈哈哈哈', 'interfaces': 0, 'testsuits': 0, 'testcases': 0, 'configures': 0}, {'id': 5, 'create_time': '2022年06月02日 18时02分28秒', 'name': '项目123', 'leader': '小露', 'tester': '小沈', 'programmer': '小李', 'publish_app': 'test2', 'desc': '213', 'interfaces': 0, 'testsuits': 0, 'testcases': 0, 'configures': 0}, {'id': 6, 'create_time': '2022年06月07日 15时25分35秒', 'name': 'test123', 'leader': 'test123', 'tester': 'test123', 'programmer': 'test123', 'publish_app': 'test123', 'desc': 'test123', 'interfaces': 1, 'testsuits': 1, 'testcases': 0, 'configures': 0}], 'current_num': 1, 'max_num': 2}
+                          
+                        </td>
+                      </tr>
+                    
+                  </table>
+              </div>
+
+              <h3>Validators:</h3>
+              <div style="overflow: auto">
+                  <table>
+                    <tr>
+                      <th>check</th>
+                      <th>comparator</th>
+                      <th>expect value</th>
+                      <th>actual value</th>
+                    </tr>
+                    
+                    <tr>
+                      
+                      <td class="passed">
+                      
+                        status_code
+                      </td>
+                      <td>equals</td>
+                      <td>200</td>
+                      <td>200</td>
+                    </tr>
+                    
+                  </table>
+              </div>
+
+              <h3>Statistics:</h3>
+              <div style="overflow: auto">
+                <table>
+                  <tr>
+                      <th>content_size(bytes)</th>
+                      <td>1400</td>
+                    </tr>
+                  <tr>
+                    <th>response_time(ms)</th>
+                    <td>59.37</td>
+                  </tr>
+                  <tr>
+                    <th>elapsed(ms)</th>
+                    <td>55.867</td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        
+
+      </td>
+    </tr>
+  
+  </table>
+  
+</body>

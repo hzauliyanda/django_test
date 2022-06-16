@@ -1,5 +1,8 @@
 # coding:utf-8
 from rest_framework import serializers
+
+from utils.base_serializers import RunSerializer
+from utils.validators import ManualValidateIsExist
 from .models import Interfaces
 from projects.models import Projects
 from testcases.models import Testcases
@@ -45,6 +48,7 @@ class TestcasesNamesModelSerializer(serializers.ModelSerializer):
     """
     序列化器类，生成序列化器字段时只生成id和name
     """
+
     class Meta:
         model = Testcases
         fields = ('id', 'name')
@@ -70,6 +74,7 @@ class ConfiguresNamesModelSerrializer(serializers.ModelSerializer):
     """
     序列化器类，生成序列化器字段时只生成id和name
     """
+
     class Meta:
         model = Configures
         fields = ('id', 'name')
@@ -91,3 +96,14 @@ class ConfiguresInterfacesModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interfaces
         fields = ('configures',)
+
+
+class InterfacesRunModelSerializer(RunSerializer, serializers.ModelSerializer):
+    """
+    继承父类BaseSerializer
+    """
+    class Meta(RunSerializer.Meta):
+        """
+        继承父类BaseSerializer的子类，指定模型对象
+        """
+        model = Interfaces

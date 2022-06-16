@@ -4,7 +4,9 @@ from django.shortcuts import render
 
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
+from utils.mixins import RunMixin
 from .models import Interfaces
 from . import serializers
 from testcases.models import Testcases
@@ -12,7 +14,7 @@ from testcases.models import Testcases
 from configures.models import Configures
 
 
-class InterfacesViewSet(viewsets.ModelViewSet):
+class InterfacesViewSet(RunMixin, viewsets.ModelViewSet):
     """
         create:
         创建接口数据
@@ -82,6 +84,15 @@ class InterfacesViewSet(viewsets.ModelViewSet):
         response.data = response.data.get('configures')
         return response
 
+    def get_testcase_qs(self):
+        """
+        获取测试用例集
+        :return: 测试用例集,类型为QuerySet
+        """
+        instance = self.get_object()
+        qs = Testcases.objects.filter(interface=instance)
+        return qs
+
     def get_serializer_class(self):
         """
         重写父类方法，根据不同action调用不同的序列化器类
@@ -91,5 +102,7 @@ class InterfacesViewSet(viewsets.ModelViewSet):
             return serializers.TestcasesInterfacesModelSerializer
         elif self.action == 'configures':
             return serializers.ConfiguresInterfacesModelSerializer
+        elif self.action == 'run':
+            return serializers.InterfacesRunModelSerializer
         else:
             return super().get_serializer_class()

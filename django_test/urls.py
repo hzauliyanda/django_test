@@ -38,6 +38,8 @@ urlpatterns = [
     path('', include('debugtalks.urls')),
     path('', include('envs.urls')),
     path('', include('testsuites.urls')),
+    path('', include('configures.urls')),
+    path('', include('summary.urls')),
 
     path('docs/', include_docs_urls(title='test接口文档', description='哈哈哈哈哈哈，这是哥的第一个接口文档')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

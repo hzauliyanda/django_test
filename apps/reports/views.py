@@ -8,7 +8,7 @@ from .models import Reports
 from . import serializers
 
 
-class ReportViewSet(mixins.CreateModelMixin,
+class ReportViewSet(mixins.ListModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
@@ -40,7 +40,7 @@ class ReportViewSet(mixins.CreateModelMixin,
         """
         instance = self.get_object()
         try:
-            summary = json.loads(instance.summary, encoding='utf-8')
+            summary = json.loads(instance.summary)
             return Response({
                 'id': instance.id,
                 'summary': summary
