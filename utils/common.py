@@ -8,6 +8,8 @@
 import json
 import logging
 import os
+import subprocess
+import sys
 from datetime import datetime
 import yaml
 from django.utils import log
@@ -18,6 +20,7 @@ from debugtalks.models import DebugTalks
 from envs.models import Envs
 from reports.models import Reports
 from testcases.models import Testcases
+from utils.shell import cmd
 
 log = logging.getLogger('wl')
 
@@ -101,12 +104,16 @@ def run_testcase(instance: Testcases, testcase_dir_path: str):
     """
     log.info(f"开始执行用例...")
     hrunner = HttpRunner()
+
     try:
+        # process=subprocess.Popen(f"hrun {testcase_dir_path} --log-level debug", shell=True, stdout=subprocess.PIPE,
+        #                  stderr=subprocess.STDOUT, encoding="utf-8")
+        # for line in process.stdout:
+        #     sys.stdout.write(line)
         hrunner.run(testcase_dir_path)
     except Exception as e:
         log.error(e)
         return Response({'msg': '用例执行失败', 'status': 1}, status=400)
-
     # 创建报告
     report_id = create_report(hrunner, instance)
     # 返回测试报告id即可

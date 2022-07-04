@@ -4,11 +4,10 @@
 import logging
 import os
 from datetime import datetime
-
+import shutil
 from django.conf import settings
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
 from envs.models import Envs
 from utils import common
 
@@ -66,6 +65,11 @@ class RunMixin:
         serializer.is_valid(raise_exception=True)
         env_id = serializer.validated_data.get('env_id')
         env = Envs.objects.get(id=env_id)
+        # 清空之前的项目文件夹
+        if os.path.exists(settings.PROJECT_DIR):
+            shutil.rmtree(settings.PROJECT_DIR)
+        if os.path.exists(settings.REPORT_DIR):
+            shutil.rmtree(settings.REPORT_DIR)
         # 2、创建以时间戳命名的目录
         testcase_dir_path = os.path.join(settings.PROJECT_DIR, datetime.strftime(datetime.now(), "%Y%m%d%H%M%S"))
         # 3、创建以项目名命名的目录
@@ -77,12 +81,12 @@ class RunMixin:
         return common.run_testcase(instance, testcase_dir_path)
 
     @action(methods=['POST'], detail=True)
-    def run(self, request):
+    def run(self, request, *args, **kwargs):
         qs = self.get_testcase_qs()
         if len(qs) == 0:
             return Response({'msg': '未找到测试用例'}, status=400)
         return self.execute(request, qs)
 
     def get_testcase_qs(self):
-        return []
+        raise NotImplementedError('父类未实现get_testcase_qs方法')
         # raise ImportError("")

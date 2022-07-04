@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-35pf)i%qo9md&)g5)26%on_*4l#@)2&g@bwsknh_w$w5_+7!=c
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -97,8 +98,11 @@ DATABASES = {
         'NAME': 'django_test',
         'USER': 'root',
         'PASSWORD': '123456789',
-        'HOST': '',
-        'PORT': '',
+        # 'HOST': '127.0.0.1',  # 需与部署的mysql名称保持一致，在同一网络下可以使用name访问
+        # 'HOST': 'db_mysql',
+        'HOST': '114.115.200.44',
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
@@ -250,3 +254,5 @@ CORS_ALLOW_CREDENTIALS = True
 
 # 定义存在httprunner工程项目的路径
 PROJECT_DIR = os.path.join(BASE_DIR, 'projects_dir')
+REPORT_DIR = os.path.join(BASE_DIR, 'reports')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

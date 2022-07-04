@@ -1,0 +1,16 @@
+- config:
+    name: test_case
+    request:
+      base_url: http://114.115.200.44:8000
+- test:
+    name: test_case
+    request:
+      json:
+        password: '1234'
+        username: test
+      method: POST
+      url: /user/login/
+    validate:
+    - check: status_code
+      comparator: equals
+      expected: 200
